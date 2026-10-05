@@ -1,0 +1,5 @@
+-- NexusSpace creates profiles from Supabase Auth sign-ups and creates
+-- projects, tasks, and files from the authenticated application.
+-- Do not seed fabricated auth.users IDs: they cannot sign in and do not
+-- represent real workspace owners. Sign up in the application to create
+-- the first profile and workspace data.

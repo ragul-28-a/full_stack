@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+.pnpm-store
+__pycache__/
+*.py[cod]
+*.sqlite3
+.venv/
+venv/
+
+# Build output
+dist
+dist-ssr
+*.local
+
+# Environment variables
+.env
+.env.production
+.env.local
+project.zip
+
+# Logs & Editor files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vscode/
+.idea/
+.DS_Store
