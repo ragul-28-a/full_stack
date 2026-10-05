@@ -34,23 +34,34 @@ const ConfigurationNotice = () => (
         Connect your Supabase project
       </h1>
       <p style={{ color: '#cbd5e1', lineHeight: 1.65 }}>
-        The site is running, but its Supabase environment variables are missing or invalid.
-        Add the values in Vercel, then redeploy this project.
+        The site is running, but the Supabase URL or public key is missing or invalid.
+        Copy the two different values below from your Supabase project, add them in Vercel,
+        then redeploy.
       </p>
       <ol style={{ color: '#cbd5e1', lineHeight: 1.9, paddingLeft: '1.4rem' }}>
-        <li>In Vercel, open this project’s Settings → Environment Variables.</li>
         <li>
-          Set <code>VITE_SUPABASE_URL</code> to the Supabase Project URL
-          (for example, <code>https://your-project.supabase.co</code>).
+          In Supabase, open your project’s <strong>Settings → API</strong> and copy the
+          <strong> Project URL</strong>. It starts with <code>https://</code>; it is not an API key.
         </li>
         <li>
-          Set <code>VITE_SUPABASE_ANON_KEY</code> to the Supabase Publishable key
-          (<code>sb_publishable_…</code>), never a Secret key.
+          In Supabase <strong>Settings → API Keys</strong>, copy the <strong>Publishable key</strong>.
+          It starts with <code>sb_publishable_</code>. Do not copy the Secret key.
         </li>
-        <li>Apply the variables to Production and redeploy the latest commit.</li>
+        <li>
+          In Vercel, open this project’s <strong>Settings → Environment Variables</strong> and add:
+          <pre style={{ overflowX: 'auto', padding: '0.85rem', borderRadius: '0.5rem', background: '#020617', lineHeight: 1.6 }}>
+            <code>{'VITE_SUPABASE_URL=https://YOUR-PROJECT-REF.supabase.co\nVITE_SUPABASE_ANON_KEY=sb_publishable_YOUR_PUBLIC_KEY'}</code>
+          </pre>
+        </li>
+        <li>
+          Paste each value without quotes or placeholder text. Set both variables for
+          <strong> Production</strong>, save, then redeploy the latest commit.
+        </li>
       </ol>
       <p style={{ marginBottom: 0, color: '#94a3b8', fontSize: '0.9rem' }}>
-        These frontend variables are included in the public site bundle. Only use a publishable key here.
+        <code>VITE_SUPABASE_URL</code> must be a URL, while <code>VITE_SUPABASE_ANON_KEY</code> must be
+        a Publishable key. Never use an <code>sb_secret_</code> or <code>service_role</code> key here:
+        Vite frontend variables are public.
       </p>
     </section>
   </main>

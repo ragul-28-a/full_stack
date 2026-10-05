@@ -58,11 +58,20 @@ The previously checked-in MCP configuration contained a database credential. Rot
 
 Vercel hosts the React frontend. Django is a separate WSGI service; deploy the `backend` directory to a Python host that supports Django/Gunicorn, then configure:
 
-- **Vercel:** `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, and `VITE_API_BASE_URL` (the public Django API origin, without a trailing slash).
+- **Get the two Supabase frontend values:** In the Supabase Dashboard, select the right project. Copy **Project URL** from **Settings → API** (it begins with `https://` and ends in `.supabase.co`). Then copy the **Publishable key** (it begins with `sb_publishable_`) from **Settings → API Keys**. The Project URL and Publishable key are two different values.
+- **Vercel frontend variables:** In the Vercel project, open **Settings → Environment Variables** and add these two entries. Paste only the value in each Value box; do not include quotes or the example placeholder text:
+
+  | Vercel Name | Value to paste |
+  |---|---|
+  | `VITE_SUPABASE_URL` | The Supabase **Project URL**, for example `https://YOUR-PROJECT-REF.supabase.co` |
+  | `VITE_SUPABASE_ANON_KEY` | The Supabase **Publishable key**, for example `sb_publishable_YOUR_PUBLIC_KEY` |
+
+  Select the **Production** environment (and Preview too if you use preview deployments), save, then redeploy. Although the existing variable name contains `ANON_KEY`, a current Supabase Publishable key is the correct public key value for it.
+- Also set `VITE_API_BASE_URL` to the public Django API origin (without a trailing slash).
 - **Django host:** `SUPABASE_URL`, `SUPABASE_ANON_KEY`, a strong `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=false`, `DJANGO_ALLOWED_HOSTS`, and `CORS_ALLOWED_ORIGINS` (the Vercel site origin).
 - The Django start command is `gunicorn nexus_api.wsgi:application --bind 0.0.0.0:$PORT` with the working directory set to `backend`.
 
-Do not add the Supabase service-role key or database password to Vercel frontend variables. The browser only receives the anon key; the API forwards the user's access token so database policies remain in force.
+Never put a Supabase **Secret key** (`sb_secret_...`), legacy `service_role` key, or database password into a `VITE_` variable. Vite embeds frontend variables into public JavaScript. The Django backend uses the same public Supabase key plus each user's verified access token, so database RLS remains in force.
 
 ## API endpoints
 
